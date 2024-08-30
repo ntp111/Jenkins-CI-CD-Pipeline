@@ -42,10 +42,12 @@ pipeline {
 
     post {
         always {
-            mail to: 'ngtuanphong98@gmail.com',
-                 subject: "Pipeline ${currentBuild.fullDisplayName} completed",
-                 body: "Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}",
-                 attachLog: true
+            mail to: 'your-email@example.com',
+                subject: "Pipeline ${currentBuild.fullDisplayName} completed",
+                body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}.
+                
+                Please check the Jenkins console output for more details."""
         }
     }
+
 }
