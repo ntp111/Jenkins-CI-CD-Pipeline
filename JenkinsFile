@@ -14,6 +14,18 @@ pipeline {
                 echo 'Running unit and integration tests...'
                 echo 'Tools: JUnit for unit tests, TestNG for integration tests'
             }
+            post {
+                always {
+                    emailext(
+                        attachLog: true,
+                        to: 'ngtuanphong98@gmail.com',
+                        subject: "Unit and Integration Tests Completed",
+                        body: """Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}. 
+
+                        Please check the attached log for more details."""
+                    )
+                }
+            }
         }
 
         stage('Code Analysis') {
@@ -28,15 +40,18 @@ pipeline {
                 echo 'Performing security scan...'
                 echo 'Tool: OWASP Dependency-Check'
             }
-                post {
-                    always {
-                        mail to: 'ngtuanphong98@gmail.com',
-                            subject: "Security Scan Completed",
-                            body: """Security Scan stage has completed with status: ${currentBuild.currentResult}. 
+            post {
+                always {
+                    emailext(
+                        attachLog: true,
+                        to: 'ngtuanphong98@gmail.com',
+                        subject: "Security Scan Completed",
+                        body: """Security Scan stage has completed with status: ${currentBuild.currentResult}. 
 
-                            Please check the Jenkins console output for more details."""
-                    }
+                        Please check the attached log for more details."""
+                    )
                 }
+            }
         }
 
         stage('Deploy to Staging') {
@@ -51,15 +66,18 @@ pipeline {
                 echo 'Running integration tests on the staging environment...'
                 echo 'Tools: Selenium for web applications, Postman for API testing'
             }
-                post {
-                    always {
-                        mail to: 'ngtuanphong98@gmail.com',
-                            subject: "Pipeline ${currentBuild.fullDisplayName} completed",
-                            body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}.
-                            
-                            Please check the Jenkins console output for more details."""
-                    }
+            post {
+                always {
+                    emailext(
+                        attachLog: true,
+                        to: 'ngtuanphong98@gmail.com',
+                        subject: "Integration Tests on Staging Completed",
+                        body: """Integration Tests on Staging stage has completed with status: ${currentBuild.currentResult}. 
+
+                        Please check the attached log for more details."""
+                    )
                 }
+            }
         }
 
         stage('Deploy to Production') {
@@ -70,7 +88,16 @@ pipeline {
         }
     }
 
+    post {
+        always {
+            emailext(
+                attachLog: true,
+                to: 'ngtuanphong98@gmail.com',
+                subject: "Pipeline ${currentBuild.fullDisplayName} completed",
+                body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}. 
 
-
-
+                Please check the attached log for more details."""
+            )
+        }
+    }
 }
