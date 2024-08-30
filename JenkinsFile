@@ -17,9 +17,11 @@ pipeline {
             post {
                 always {
                     script {
-                        // Save the log to a file
-                        def logContent = currentBuild.getLog()
-                        writeFile file: 'UnitTests.log', text: logContent
+                        // Write a custom log to a file
+                        sh 'echo "Unit and Integration Tests Log" > UnitTests.log'
+                        
+                        // Archive the log file to make sure it's accessible
+                        archiveArtifacts artifacts: 'UnitTests.log'
 
                         // Send an email with the log file attached
                         emailext(
@@ -50,9 +52,11 @@ pipeline {
             post {
                 always {
                     script {
-                        // Save the log to a file
-                        def logContent = currentBuild.getLog()
-                        writeFile file: 'SecurityScan.log', text: logContent
+                        // Write a custom log to a file
+                        sh 'echo "Security Scan Log" > SecurityScan.log'
+                        
+                        // Archive the log file to make sure it's accessible
+                        archiveArtifacts artifacts: 'SecurityScan.log'
 
                         // Send an email with the log file attached
                         emailext(
@@ -83,9 +87,11 @@ pipeline {
             post {
                 always {
                     script {
-                        // Save the log to a file
-                        def logContent = currentBuild.getLog()
-                        writeFile file: 'IntegrationTests.log', text: logContent
+                        // Write a custom log to a file
+                        sh 'echo "Integration Tests Log" > IntegrationTests.log'
+                        
+                        // Archive the log file to make sure it's accessible
+                        archiveArtifacts artifacts: 'IntegrationTests.log'
 
                         // Send an email with the log file attached
                         emailext(
@@ -112,11 +118,13 @@ pipeline {
     post {
         always {
             script {
-                // Save the final log to a file
-                def logContent = currentBuild.getLog()
-                writeFile file: 'FinalPipeline.log', text: logContent
+                // Write a custom log to a file
+                sh 'echo "Final Pipeline Log" > FinalPipeline.log'
+                
+                // Archive the log file to make sure it's accessible
+                archiveArtifacts artifacts: 'FinalPipeline.log'
 
-                // Send the final email with the log file attached
+                // Send an email with the log file attached
                 emailext(
                     attachmentsPattern: 'FinalPipeline.log',
                     to: 'ngtuanphong98@gmail.com',
