@@ -17,9 +17,12 @@ pipeline {
             post {
                 always {
                     emailext(
-                        subject: "Test Email from Jenkins",
-                        body: "This is a test email from Jenkins to verify SMTP configuration.",
-                        to: "ngtuanphong98@gmail.com"
+                        attachLog: true,
+                        to: 'ngtuanphong98@gmail.com',
+                        subject: "Unit and Integration Tests Completed",
+                        body: """Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}. 
+
+                        Please check the attached log for more details."""
                     )
                 }
             }
@@ -40,9 +43,12 @@ pipeline {
             post {
                 always {
                     emailext(
-                        subject: "Test Email from Jenkins",
-                        body: "This is a test email from Jenkins to verify SMTP configuration.",
-                        to: "ngtuanphong98@gmail.com"
+                        attachLog: true,
+                        to: 'ngtuanphong98@gmail.com',
+                        subject: "Security Scan Completed",
+                        body: """Security Scan stage has completed with status: ${currentBuild.currentResult}. 
+
+                        Please check the attached log for more details."""
                     )
                 }
             }
@@ -63,9 +69,12 @@ pipeline {
             post {
                 always {
                     emailext(
-                        subject: "Test Email from Jenkins",
-                        body: "This is a test email from Jenkins to verify SMTP configuration.",
-                        to: "ngtuanphong98@gmail.com"
+                        attachLog: true,
+                        to: 'ngtuanphong98@gmail.com',
+                        subject: "Integration Tests on Staging Completed",
+                        body: """Integration Tests on Staging stage has completed with status: ${currentBuild.currentResult}. 
+
+                        Please check the attached log for more details."""
                     )
                 }
             }
@@ -82,9 +91,12 @@ pipeline {
     post {
         always {
             emailext(
-                subject: "Test Email from Jenkins",
-                body: "This is a test email from Jenkins to verify SMTP configuration.",
-                to: "ngtuanphong98@gmail.com"
+                attachLog: true,
+                to: 'ngtuanphong98@gmail.com',
+                subject: "Pipeline ${currentBuild.fullDisplayName} completed",
+                body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}. 
+
+                Please check the attached log for more details."""
             )
         }
     }
