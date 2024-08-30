@@ -49,21 +49,15 @@ pipeline {
                 echo 'Performing security scan...'
                 echo 'Tool: OWASP Dependency-Check'
             }
-            post {
-                always {
-                    // Archive the log file
-                    archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
-                    
-                    // Send an email with log file as attachment
-                    emailext(
-                        subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
-                        body: "Please find the build logs attached.\n\nBuild URL: ${env.BUILD_URL}",
-                        to: "ngtuanphong98@gmail.com",
-                        attachLog: true,
-                        attachmentsPattern: "build.log"
-                    )
-                }
-            }
+post {
+    always {
+        emailext(
+            subject: "Test Email from Jenkins",
+            body: "This is a test email from Jenkins to verify SMTP configuration.",
+            to: "ngtuanphong98@gmail.com"
+        )
+    }
+}
         }
 
         stage('Deploy to Staging') {
@@ -78,21 +72,15 @@ pipeline {
                 echo 'Running integration tests on the staging environment...'
                 echo 'Tools: Selenium for web applications, Postman for API testing'
             }
-            post {
-                always {
-                    // Archive the log file
-                    archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
-                    
-                    // Send an email with log file as attachment
-                    emailext(
-                        subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
-                        body: "Please find the build logs attached.\n\nBuild URL: ${env.BUILD_URL}",
-                        to: "ngtuanphong98@gmail.com",
-                        attachLog: true,
-                        attachmentsPattern: "build.log"
-                    )
-                }
-            }
+post {
+    always {
+        emailext(
+            subject: "Test Email from Jenkins",
+            body: "This is a test email from Jenkins to verify SMTP configuration.",
+            to: "ngtuanphong98@gmail.com"
+        )
+    }
+}
         }
 
         stage('Deploy to Production') {
@@ -103,19 +91,13 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Archive the log file
-            archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
-            
-            // Send an email with log file as attachment
-            emailext(
-                subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
-                body: "Please find the build logs attached.\n\nBuild URL: ${env.BUILD_URL}",
-                to: "ngtuanphong98@gmail.com",
-                attachLog: true,
-                attachmentsPattern: "build.log"
-            )
-        }
+post {
+    always {
+        emailext(
+            subject: "Test Email from Jenkins",
+            body: "This is a test email from Jenkins to verify SMTP configuration.",
+            to: "ngtuanphong98@gmail.com"
+        )
     }
+}
 }
