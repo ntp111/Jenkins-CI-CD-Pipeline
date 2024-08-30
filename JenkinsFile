@@ -16,14 +16,21 @@ pipeline {
             }
             post {
                 always {
-                    emailext(
-                        attachLog: true,
-                        to: 'ngtuanphong98@gmail.com',
-                        subject: "Unit and Integration Tests Completed",
-                        body: """Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}. 
+                    script {
+                        // Save the log to a file
+                        def logContent = currentBuild.rawBuild.getLog().join("\n")
+                        writeFile file: 'UnitTests.log', text: logContent
 
-                        Please check the attached log for more details."""
-                    )
+                        // Send an email with the log file attached
+                        emailext(
+                            attachmentsPattern: 'UnitTests.log',
+                            to: 'ngtuanphong98@gmail.com',
+                            subject: "Unit and Integration Tests Completed",
+                            body: """Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}. 
+
+                            Please find the attached log for more details."""
+                        )
+                    }
                 }
             }
         }
@@ -42,14 +49,21 @@ pipeline {
             }
             post {
                 always {
-                    emailext(
-                        attachLog: true,
-                        to: 'ngtuanphong98@gmail.com',
-                        subject: "Security Scan Completed",
-                        body: """Security Scan stage has completed with status: ${currentBuild.currentResult}. 
+                    script {
+                        // Save the log to a file
+                        def logContent = currentBuild.rawBuild.getLog().join("\n")
+                        writeFile file: 'SecurityScan.log', text: logContent
 
-                        Please check the attached log for more details."""
-                    )
+                        // Send an email with the log file attached
+                        emailext(
+                            attachmentsPattern: 'SecurityScan.log',
+                            to: 'ngtuanphong98@gmail.com',
+                            subject: "Security Scan Completed",
+                            body: """Security Scan stage has completed with status: ${currentBuild.currentResult}. 
+
+                            Please find the attached log for more details."""
+                        )
+                    }
                 }
             }
         }
@@ -68,14 +82,21 @@ pipeline {
             }
             post {
                 always {
-                    emailext(
-                        attachLog: true,
-                        to: 'ngtuanphong98@gmail.com',
-                        subject: "Integration Tests on Staging Completed",
-                        body: """Integration Tests on Staging stage has completed with status: ${currentBuild.currentResult}. 
+                    script {
+                        // Save the log to a file
+                        def logContent = currentBuild.rawBuild.getLog().join("\n")
+                        writeFile file: 'IntegrationTests.log', text: logContent
 
-                        Please check the attached log for more details."""
-                    )
+                        // Send an email with the log file attached
+                        emailext(
+                            attachmentsPattern: 'IntegrationTests.log',
+                            to: 'ngtuanphong98@gmail.com',
+                            subject: "Integration Tests on Staging Completed",
+                            body: """Integration Tests on Staging stage has completed with status: ${currentBuild.currentResult}. 
+
+                            Please find the attached log for more details."""
+                        )
+                    }
                 }
             }
         }
@@ -90,14 +111,21 @@ pipeline {
 
     post {
         always {
-            emailext(
-                attachLog: true,
-                to: 'ngtuanphong98@gmail.com',
-                subject: "Pipeline ${currentBuild.fullDisplayName} completed",
-                body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}. 
+            script {
+                // Save the final log to a file
+                def logContent = currentBuild.rawBuild.getLog().join("\n")
+                writeFile file: 'FinalPipeline.log', text: logContent
 
-                Please check the attached log for more details."""
-            )
+                // Send the final email with the log file attached
+                emailext(
+                    attachmentsPattern: 'FinalPipeline.log',
+                    to: 'ngtuanphong98@gmail.com',
+                    subject: "Pipeline ${currentBuild.fullDisplayName} completed",
+                    body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}. 
+
+                    Please find the attached log for more details."""
+                )
+            }
         }
     }
 }
