@@ -51,23 +51,17 @@ pipeline {
             }
             post {
                 always {
-                    script {
-                        // Write a custom log to a file
-                        sh 'echo "Security Scan Log" > SecurityScan.log'
-                        
-                        // Archive the log file to make sure it's accessible
-                        archiveArtifacts artifacts: 'SecurityScan.log'
-
-                        // Send an email with the log file attached
-                        emailext(
-                            attachmentsPattern: 'SecurityScan.log',
-                            to: 'ngtuanphong98@gmail.com',
-                            subject: "Security Scan Completed",
-                            body: """Security Scan stage has completed with status: ${currentBuild.currentResult}. 
-
-                            Please find the attached log for more details."""
-                        )
-                    }
+                    // Archive the log file
+                    archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+                    
+                    // Send an email with log file as attachment
+                    emailext(
+                        subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                        body: "Please find the build logs attached.\n\nBuild URL: ${env.BUILD_URL}",
+                        to: "your-email@example.com",
+                        attachLog: true,
+                        attachmentsPattern: "build.log"
+                    )
                 }
             }
         }
@@ -86,23 +80,17 @@ pipeline {
             }
             post {
                 always {
-                    script {
-                        // Write a custom log to a file
-                        sh 'echo "Integration Tests Log" > IntegrationTests.log'
-                        
-                        // Archive the log file to make sure it's accessible
-                        archiveArtifacts artifacts: 'IntegrationTests.log'
-
-                        // Send an email with the log file attached
-                        emailext(
-                            attachmentsPattern: 'IntegrationTests.log',
-                            to: 'ngtuanphong98@gmail.com',
-                            subject: "Integration Tests on Staging Completed",
-                            body: """Integration Tests on Staging stage has completed with status: ${currentBuild.currentResult}. 
-
-                            Please find the attached log for more details."""
-                        )
-                    }
+                    // Archive the log file
+                    archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+                    
+                    // Send an email with log file as attachment
+                    emailext(
+                        subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                        body: "Please find the build logs attached.\n\nBuild URL: ${env.BUILD_URL}",
+                        to: "your-email@example.com",
+                        attachLog: true,
+                        attachmentsPattern: "build.log"
+                    )
                 }
             }
         }
@@ -117,23 +105,17 @@ pipeline {
 
     post {
         always {
-            script {
-                // Write a custom log to a file
-                sh 'echo "Final Pipeline Log" > FinalPipeline.log'
-                
-                // Archive the log file to make sure it's accessible
-                archiveArtifacts artifacts: 'FinalPipeline.log'
-
-                // Send an email with the log file attached
-                emailext(
-                    attachmentsPattern: 'FinalPipeline.log',
-                    to: 'ngtuanphong98@gmail.com',
-                    subject: "Pipeline ${currentBuild.fullDisplayName} completed",
-                    body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}. 
-
-                    Please find the attached log for more details."""
-                )
-            }
+            // Archive the log file
+            archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+            
+            // Send an email with log file as attachment
+            emailext(
+                subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                body: "Please find the build logs attached.\n\nBuild URL: ${env.BUILD_URL}",
+                to: "your-email@example.com",
+                attachLog: true,
+                attachmentsPattern: "build.log"
+            )
         }
     }
 }
