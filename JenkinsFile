@@ -16,23 +16,11 @@ pipeline {
             }
             post {
                 always {
-                    script {
-                        // Write a custom log to a file using Windows commands
-                        bat 'echo Unit and Integration Tests Log > UnitTests.log'
-                        
-                        // Archive the log file to make sure it's accessible
-                        archiveArtifacts artifacts: 'UnitTests.log'
-
-                        // Send an email with the log file attached
-                        emailext(
-                            attachmentsPattern: 'UnitTests.log',
-                            to: 'ngtuanphong98@gmail.com',
-                            subject: "Unit and Integration Tests Completed",
-                            body: """Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}. 
-
-                            Please find the attached log for more details."""
-                        )
-                    }
+                    emailext(
+                        subject: "Test Email from Jenkins",
+                        body: "This is a test email from Jenkins to verify SMTP configuration.",
+                        to: "ngtuanphong98@gmail.com"
+                    )
                 }
             }
         }
@@ -49,15 +37,15 @@ pipeline {
                 echo 'Performing security scan...'
                 echo 'Tool: OWASP Dependency-Check'
             }
-post {
-    always {
-        emailext(
-            subject: "Test Email from Jenkins",
-            body: "This is a test email from Jenkins to verify SMTP configuration.",
-            to: "ngtuanphong98@gmail.com"
-        )
-    }
-}
+            post {
+                always {
+                    emailext(
+                        subject: "Test Email from Jenkins",
+                        body: "This is a test email from Jenkins to verify SMTP configuration.",
+                        to: "ngtuanphong98@gmail.com"
+                    )
+                }
+            }
         }
 
         stage('Deploy to Staging') {
@@ -72,15 +60,15 @@ post {
                 echo 'Running integration tests on the staging environment...'
                 echo 'Tools: Selenium for web applications, Postman for API testing'
             }
-post {
-    always {
-        emailext(
-            subject: "Test Email from Jenkins",
-            body: "This is a test email from Jenkins to verify SMTP configuration.",
-            to: "ngtuanphong98@gmail.com"
-        )
-    }
-}
+            post {
+                always {
+                    emailext(
+                        subject: "Test Email from Jenkins",
+                        body: "This is a test email from Jenkins to verify SMTP configuration.",
+                        to: "ngtuanphong98@gmail.com"
+                    )
+                }
+            }
         }
 
         stage('Deploy to Production') {
@@ -91,13 +79,13 @@ post {
         }
     }
 
-post {
-    always {
-        emailext(
-            subject: "Test Email from Jenkins",
-            body: "This is a test email from Jenkins to verify SMTP configuration.",
-            to: "ngtuanphong98@gmail.com"
-        )
+    post {
+        always {
+            emailext(
+                subject: "Test Email from Jenkins",
+                body: "This is a test email from Jenkins to verify SMTP configuration.",
+                to: "ngtuanphong98@gmail.com"
+            )
+        }
     }
-}
 }
