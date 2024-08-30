@@ -16,6 +16,19 @@ pipeline {
                 echo 'Tools: JUnit for unit tests, TestNG for integration tests'
                 // Example: sh 'mvn test' (Not implemented)
             }
+            post {
+                always {
+                    script {
+                        def log = currentBuild.rawBuild.getLog(100).join("\n")
+                        mail to: 'ngtuanphong98@gmail.com',
+                            subject: "Unit and Integration Tests Stage: ${currentBuild.fullDisplayName}",
+                            body: """Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.
+                            
+                            Please find the attached log for more details.""",
+                            attachments: [[fileName: 'UnitTests.log', content: log]]
+                    }
+                }
+            }
         }
 
         stage('Code Analysis') {
@@ -31,6 +44,19 @@ pipeline {
                 echo 'Performing security scan...'
                 echo 'Tool: OWASP Dependency-Check'
                 // Example: sh 'dependency-check --project myproject --scan ./' (Not implemented)
+            }
+            post {
+                always {
+                    script {
+                        def log = currentBuild.rawBuild.getLog(100).join("\n")
+                        mail to: 'ngtuanphong98@gmail.com',
+                            subject: "Security Scan Stage: ${currentBuild.fullDisplayName}",
+                            body: """Security Scan stage has completed with status: ${currentBuild.currentResult}.
+                            
+                            Please find the attached log for more details.""",
+                            attachments: [[fileName: 'SecurityScan.log', content: log]]
+                    }
+                }
             }
         }
 
@@ -59,7 +85,6 @@ pipeline {
         }
     }
 
-
     post {
         always {
             mail to: 'ngtuanphong98@gmail.com',
@@ -69,5 +94,4 @@ pipeline {
                 Please check the Jenkins console output for more details."""
         }
     }
-
 }
