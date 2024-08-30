@@ -6,7 +6,6 @@ pipeline {
             steps {
                 echo 'Building the code using Maven...'
                 echo 'Tool: Maven'
-                // Example: sh 'mvn clean package' (Not implemented)
             }
         }
 
@@ -14,7 +13,6 @@ pipeline {
             steps {
                 echo 'Running unit and integration tests...'
                 echo 'Tools: JUnit for unit tests, TestNG for integration tests'
-                // Example: sh 'mvn test' (Not implemented)
             }
         }
 
@@ -22,7 +20,6 @@ pipeline {
             steps {
                 echo 'Performing code analysis...'
                 echo 'Tool: SonarQube'
-                // Example: sh 'sonar-scanner' (Not implemented)
             }
         }
 
@@ -30,7 +27,6 @@ pipeline {
             steps {
                 echo 'Performing security scan...'
                 echo 'Tool: OWASP Dependency-Check'
-                // Example: sh 'dependency-check --project myproject --scan ./' (Not implemented)
             }
                 post {
                     always {
@@ -47,7 +43,6 @@ pipeline {
             steps {
                 echo 'Deploying application to staging environment...'
                 echo 'Tool: AWS CLI for deploying to an AWS EC2 instance'
-                // Example: sh 'aws deploy ...' (Not implemented)
             }
         }
 
@@ -55,7 +50,6 @@ pipeline {
             steps {
                 echo 'Running integration tests on the staging environment...'
                 echo 'Tools: Selenium for web applications, Postman for API testing'
-                // Example: sh 'run-selenium-tests' or 'postman-collection-runner' (Not implemented)
             }
                 post {
                     always {
@@ -72,7 +66,6 @@ pipeline {
             steps {
                 echo 'Deploying application to production environment...'
                 echo 'Tool: AWS CLI for deploying to an AWS EC2 instance'
-                // Example: sh 'aws deploy ...' (Not implemented)
             }
         }
     }
