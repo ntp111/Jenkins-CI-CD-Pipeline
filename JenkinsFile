@@ -1,48 +1,68 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build') {
             steps {
-                // Example: Use Maven to build the project
-                sh 'mvn clean package'
+                echo 'Building the code using Maven...'
+                echo 'Tool: Maven'
+                // Example: sh 'mvn clean package' (Not implemented)
             }
         }
+
         stage('Unit and Integration Tests') {
             steps {
-                sh 'mvn test'
+                echo 'Running unit and integration tests...'
+                echo 'Tools: JUnit for unit tests, TestNG for integration tests'
+                // Example: sh 'mvn test' (Not implemented)
             }
         }
+
         stage('Code Analysis') {
             steps {
-                sh 'sonar-scanner'
+                echo 'Performing code analysis...'
+                echo 'Tool: SonarQube'
+                // Example: sh 'sonar-scanner' (Not implemented)
             }
         }
+
         stage('Security Scan') {
             steps {
-                sh 'dependency-check --project myproject --scan ./'
+                echo 'Performing security scan...'
+                echo 'Tool: OWASP Dependency-Check'
+                // Example: sh 'dependency-check --project myproject --scan ./' (Not implemented)
             }
         }
+
         stage('Deploy to Staging') {
             steps {
-                sh 'scp target/*.jar user@staging-server:/path/to/deploy'
+                echo 'Deploying application to staging environment...'
+                echo 'Tool: AWS CLI for deploying to an AWS EC2 instance'
+                // Example: sh 'aws deploy ...' (Not implemented)
             }
         }
+
         stage('Integration Tests on Staging') {
             steps {
-                sh 'curl http://staging-server:8080/health'
+                echo 'Running integration tests on the staging environment...'
+                echo 'Tools: Selenium for web applications, Postman for API testing'
+                // Example: sh 'run-selenium-tests' or 'postman-collection-runner' (Not implemented)
             }
         }
+
         stage('Deploy to Production') {
             steps {
-                sh 'scp target/*.jar user@production-server:/path/to/deploy'
+                echo 'Deploying application to production environment...'
+                echo 'Tool: AWS CLI for deploying to an AWS EC2 instance'
+                // Example: sh 'aws deploy ...' (Not implemented)
             }
         }
     }
 
+
     post {
         always {
-            mail to: 'your-email@example.com',
+            mail to: 'ngtuanphong98@gmail.com',
                 subject: "Pipeline ${currentBuild.fullDisplayName} completed",
                 body: """Pipeline ${currentBuild.fullDisplayName} completed with status ${currentBuild.currentResult}.
                 
