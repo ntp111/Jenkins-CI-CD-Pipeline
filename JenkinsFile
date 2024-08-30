@@ -18,7 +18,7 @@ pipeline {
                 always {
                     script {
                         // Save the log to a file
-                        def logContent = currentBuild.rawBuild.getLog().join("\n")
+                        def logContent = currentBuild.getLog()
                         writeFile file: 'UnitTests.log', text: logContent
 
                         // Send an email with the log file attached
@@ -51,7 +51,7 @@ pipeline {
                 always {
                     script {
                         // Save the log to a file
-                        def logContent = currentBuild.rawBuild.getLog().join("\n")
+                        def logContent = currentBuild.getLog()
                         writeFile file: 'SecurityScan.log', text: logContent
 
                         // Send an email with the log file attached
@@ -84,7 +84,7 @@ pipeline {
                 always {
                     script {
                         // Save the log to a file
-                        def logContent = currentBuild.rawBuild.getLog().join("\n")
+                        def logContent = currentBuild.getLog()
                         writeFile file: 'IntegrationTests.log', text: logContent
 
                         // Send an email with the log file attached
@@ -113,7 +113,7 @@ pipeline {
         always {
             script {
                 // Save the final log to a file
-                def logContent = currentBuild.rawBuild.getLog().join("\n")
+                def logContent = currentBuild.getLog()
                 writeFile file: 'FinalPipeline.log', text: logContent
 
                 // Send the final email with the log file attached
